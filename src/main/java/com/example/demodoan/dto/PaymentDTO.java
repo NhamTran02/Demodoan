@@ -1,5 +1,6 @@
 package com.example.demodoan.dto;
 
+import com.example.demodoan.enums.PaymentMethod;
 import com.example.demodoan.enums.PaymentStatus;
 import com.example.demodoan.model.Course;
 import com.example.demodoan.model.User;
@@ -20,7 +21,7 @@ public class PaymentDTO {
 
     private PaymentStatus status;
 
-    private String methodPayment;
+    private PaymentMethod methodPayment;
 
     private Long user;
 

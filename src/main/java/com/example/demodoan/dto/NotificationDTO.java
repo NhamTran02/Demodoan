@@ -13,6 +13,8 @@ import lombok.*;
 @NoArgsConstructor
 public class NotificationDTO {
     private Long id;
+    
+    private String title;
 
     private String message;
 
