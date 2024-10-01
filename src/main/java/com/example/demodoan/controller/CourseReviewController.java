@@ -3,6 +3,7 @@ package com.example.demodoan.controller;
 import com.example.demodoan.dto.CourseReviewDTO;
 import com.example.demodoan.model.CourseReview;
 import com.example.demodoan.service.impl.CourseReviewServiceImpl;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -17,7 +18,7 @@ public class CourseReviewController {
     private CourseReviewServiceImpl courseReviewServiceImpl;
 
     @PostMapping
-    CourseReview createCourseReview(@RequestBody CourseReviewDTO courseReviewDTO){
+    CourseReview createCourseReview(@Valid @RequestBody CourseReviewDTO courseReviewDTO){
         return courseReviewServiceImpl.createCourseReview(courseReviewDTO);
     }
 
@@ -27,7 +28,7 @@ public class CourseReviewController {
     }
 
     @PutMapping("/{id}")
-    CourseReview updateCourseReview (@PathVariable Long id, @RequestBody CourseReviewDTO courseReviewDTO){
+    CourseReview updateCourseReview (@PathVariable Long id,@Valid @RequestBody CourseReviewDTO courseReviewDTO){
         return courseReviewServiceImpl.updateCourseReview(id, courseReviewDTO);
     }
 

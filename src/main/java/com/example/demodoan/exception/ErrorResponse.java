@@ -1,20 +1,44 @@
 package com.example.demodoan.exception;
 
+import java.util.Date;
+
 public class ErrorResponse {
-    private int statusCode;
+    private Date timestamp;
+    private int status;
+    private String path;
+    private String error;
     private String message;
 
-    public ErrorResponse(int statusCode, String message) {
-        this.statusCode = statusCode;
-        this.message = message;
+    public Date getTimestamp() {
+        return timestamp;
     }
 
-    public int getStatusCode() {
-        return statusCode;
+    public void setTimestamp(Date timestamp) {
+        this.timestamp = timestamp;
     }
 
-    public void setStatusCode(int statusCode) {
-        this.statusCode = statusCode;
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
+
+    public String getPath() {
+        return path;
+    }
+
+    public void setPath(String path) {
+        this.path = path;
+    }
+
+    public String getError() {
+        return error;
+    }
+
+    public void setError(String error) {
+        this.error = error;
     }
 
     public String getMessage() {

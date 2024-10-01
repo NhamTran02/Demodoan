@@ -27,7 +27,7 @@ public class UserController {
         userServiceImpl.login(loginDTO.getEmail(), loginDTO.getPassword());
         return ResponseEntity.ok().body("token");
     }
-    @PutMapping("{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<?> updateUser(@Valid @RequestBody UserDTO userDTO,@PathVariable Long id) throws Exception {
         return ResponseEntity.ok().body(userServiceImpl.updateUser(id,userDTO));
     }

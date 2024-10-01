@@ -3,6 +3,7 @@ package com.example.demodoan.controller;
 import com.example.demodoan.dto.PaymentDTO;
 import com.example.demodoan.model.Payment;
 import com.example.demodoan.service.PaymentService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,7 +17,7 @@ public class PaymentController {
     private PaymentService paymentService;
 
     @PostMapping("")
-    public ResponseEntity<Payment> createPayment(@RequestBody PaymentDTO paymentDTO) {
+    public ResponseEntity<Payment> createPayment(@Valid  @RequestBody PaymentDTO paymentDTO) {
         Payment payment = paymentService.createPayment(paymentDTO);
         return ResponseEntity.ok().body(payment);
     }
@@ -26,7 +27,7 @@ public class PaymentController {
         return ResponseEntity.ok().body(paymentService.findAllPayments());
     }
 
-    @GetMapping("{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<Payment> getPayment(@PathVariable Long id) {
         return ResponseEntity.ok().body(paymentService.findPaymentById(id));
     }

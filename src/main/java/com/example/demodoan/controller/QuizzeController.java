@@ -3,6 +3,7 @@ package com.example.demodoan.controller;
 import com.example.demodoan.dto.QuizzeDTO;
 import com.example.demodoan.model.Quizze;
 import com.example.demodoan.service.QuizzeService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,7 +17,7 @@ public class QuizzeController {
     private QuizzeService quizzeService;
 
     @PostMapping("")
-    public ResponseEntity<Quizze> createQuizze(@RequestBody QuizzeDTO quizzeDTO) {
+    public ResponseEntity<Quizze> createQuizze(@Valid @RequestBody QuizzeDTO quizzeDTO) {
         return ResponseEntity.ok().body(quizzeService.createQuizze(quizzeDTO));
     }
 
@@ -25,20 +26,20 @@ public class QuizzeController {
         return ResponseEntity.ok().body(quizzeService.getAllQuizzes());
     }
 
-    @GetMapping("{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<Quizze> getQuizze(@PathVariable Long id) {
         return ResponseEntity.ok().body(quizzeService.getQuizzeById(id));
     }
 
-    @PutMapping("{id}")
-    public ResponseEntity<Quizze> updateQuizze(@RequestBody QuizzeDTO quizzeDTO,@PathVariable Long id) {
+    @PutMapping("/{id}")
+    public ResponseEntity<Quizze> updateQuizze(@Valid @RequestBody QuizzeDTO quizzeDTO,@PathVariable Long id) {
         return ResponseEntity.ok().body(quizzeService.updateQuizze(quizzeDTO,id));
     }
 
-    @DeleteMapping("")
-    public ResponseEntity<String> deleteQuizze(@RequestBody QuizzeDTO quizzeDTO) {
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deleteQuizze(@PathVariable Long id) {
         try {
-            quizzeService.deleteQuizze(quizzeDTO.getId());
+            quizzeService.deleteQuizze(id);
             return ResponseEntity.ok().body("Quizze deleted");
         }
         catch (Exception e) {

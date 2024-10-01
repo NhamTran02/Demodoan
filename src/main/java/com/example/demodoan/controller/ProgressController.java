@@ -3,6 +3,7 @@ package com.example.demodoan.controller;
 import com.example.demodoan.dto.ProgressDTO;
 import com.example.demodoan.model.Progress;
 import com.example.demodoan.service.impl.ProgressServiceImpl;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -17,7 +18,7 @@ public class ProgressController {
     private ProgressServiceImpl progressServiceImpl;
 
     @PostMapping
-    Progress createProgress(@RequestBody ProgressDTO progressDTO){
+    Progress createProgress(@Valid @RequestBody ProgressDTO progressDTO){
         return progressServiceImpl.createProgress(progressDTO);
     }
 
@@ -27,7 +28,7 @@ public class ProgressController {
     }
 
     @PutMapping("/{id}")
-    Progress updateProgress (@PathVariable Long id, @RequestBody ProgressDTO progressDTO){
+    Progress updateProgress (@PathVariable Long id,@Valid @RequestBody ProgressDTO progressDTO){
         return progressServiceImpl.updateProgress(id, progressDTO);
     }
 

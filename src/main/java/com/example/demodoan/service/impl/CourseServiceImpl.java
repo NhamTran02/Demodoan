@@ -1,6 +1,8 @@
 package com.example.demodoan.service.impl;
 
 import com.example.demodoan.dto.CourseDTO;
+import com.example.demodoan.exception.ErrorCode;
+import com.example.demodoan.exception.ResourceNotFoundException;
 import com.example.demodoan.model.Category;
 import com.example.demodoan.model.Course;
 import com.example.demodoan.repository.CategoryRepository;
@@ -34,7 +36,7 @@ public class CourseServiceImpl implements CourseService {
         course.setImage(courseDTO.getImage());
 
         Category category = categoryRepository.findById(courseDTO.getCategory())
-                .orElseThrow(()-> new RuntimeException("Không tìm thấy loại khóa học!"));
+                .orElseThrow(()-> new ResourceNotFoundException(ErrorCode.NOT_FOUND));
         course.setCategory(category);
 
         return courseRepository.save(course);

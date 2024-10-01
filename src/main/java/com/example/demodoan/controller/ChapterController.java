@@ -3,7 +3,10 @@ package com.example.demodoan.controller;
 import com.example.demodoan.dto.ChapterDTO;
 import com.example.demodoan.model.Chapter;
 import com.example.demodoan.service.impl.ChapterServiceImpl;
+import jakarta.validation.Valid;
+import org.hibernate.annotations.Parameter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,7 +20,7 @@ public class ChapterController {
     private ChapterServiceImpl chapterServiceImpl;
 
     @PostMapping
-    Chapter createChapter(@RequestBody ChapterDTO chapterDTO){
+    Chapter createChapter(@Valid @RequestBody ChapterDTO chapterDTO){
         return chapterServiceImpl.createChapter(chapterDTO);
     }
 
@@ -27,7 +30,7 @@ public class ChapterController {
     }
 
     @PutMapping("/{id}")
-    Chapter updateChapter (@PathVariable Long id, @RequestBody ChapterDTO chapterDTO){
+    Chapter updateChapter (@PathVariable Long id,@Valid @RequestBody ChapterDTO chapterDTO){
         return chapterServiceImpl.updateChapter(id, chapterDTO);
     }
 

@@ -5,6 +5,7 @@ import com.example.demodoan.model.User;
 import jakarta.persistence.Column;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.validation.constraints.*;
 import lombok.*;
 
 @Getter
@@ -15,11 +16,16 @@ import lombok.*;
 public class CourseReviewDTO {
     private Long id;
 
+    @Min(value = 1, message = "rating phải lớn hơn hoặc bằng 1")
+    @Max(value = 5, message = "rating phải nhỏ hơn hoặc bằng 5")
     private Integer rating;
 
+    @NotBlank(message = "comment kh đc trống")
     private String comment;
 
+    @NotNull(message = "user ID is required")
     private Long user;
 
+    @NotNull(message = "course ID is required")
     private Long course;
 }

@@ -3,6 +3,7 @@ package com.example.demodoan.controller;
 import com.example.demodoan.dto.CategoryDTO;
 import com.example.demodoan.model.Category;
 import com.example.demodoan.service.impl.CategoryServiceImpl;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -17,7 +18,7 @@ public class CategoryController {
     private CategoryServiceImpl categoryServiceImpl;
 
     @PostMapping
-    Category createCategory(@RequestBody CategoryDTO categoryDTO){
+    Category createCategory(@Valid @RequestBody CategoryDTO categoryDTO){
         return categoryServiceImpl.createCategory(categoryDTO);
     }
 
@@ -27,7 +28,7 @@ public class CategoryController {
     }
 
     @PutMapping("/{id}")
-    Category updateCategory (@PathVariable Long id, @RequestBody CategoryDTO categoryDTO){
+    Category updateCategory (@PathVariable Long id,@Valid @RequestBody CategoryDTO categoryDTO){
         return categoryServiceImpl.updateCategory(id, categoryDTO);
     }
 

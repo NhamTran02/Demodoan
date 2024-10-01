@@ -3,6 +3,7 @@ package com.example.demodoan.controller;
 import com.example.demodoan.dto.NotificationDTO;
 import com.example.demodoan.model.Notification;
 import com.example.demodoan.service.impl.NotificationServiceImpl;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -17,7 +18,7 @@ public class NotificationController {
     private NotificationServiceImpl notificationServiceImpl;
 
     @PostMapping
-    Notification createNotification(@RequestBody NotificationDTO notificationDTO){
+    Notification createNotification(@Valid  @RequestBody NotificationDTO notificationDTO){
         return notificationServiceImpl.createNotification(notificationDTO);
     }
 
@@ -27,7 +28,7 @@ public class NotificationController {
     }
 
     @PutMapping("/{id}")
-    Notification updateNotification (@PathVariable Long id, @RequestBody NotificationDTO notificationDTO){
+    Notification updateNotification (@PathVariable Long id,@Valid @RequestBody NotificationDTO notificationDTO){
         return notificationServiceImpl.updateNotification(id, notificationDTO);
     }
 

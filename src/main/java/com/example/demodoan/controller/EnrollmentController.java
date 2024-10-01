@@ -3,6 +3,7 @@ package com.example.demodoan.controller;
 import com.example.demodoan.dto.EnrollmentDTO;
 import com.example.demodoan.model.Enrollment;
 import com.example.demodoan.service.impl.EnrollmentServiceImpl;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -27,7 +28,7 @@ public class EnrollmentController {
     }
 
     @PutMapping("/{id}")
-    Enrollment updateEnrollment (@PathVariable Long id, @RequestBody EnrollmentDTO enrollmentDTO){
+    Enrollment updateEnrollment (@PathVariable Long id,@Valid @RequestBody EnrollmentDTO enrollmentDTO){
         return enrollmentServiceImpl.updateEnrollment(id, enrollmentDTO);
     }
 

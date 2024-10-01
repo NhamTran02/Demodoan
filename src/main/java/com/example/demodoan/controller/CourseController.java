@@ -1,8 +1,10 @@
 package com.example.demodoan.controller;
 
 import com.example.demodoan.dto.CourseDTO;
+import com.example.demodoan.exception.ResourceNotFoundException;
 import com.example.demodoan.model.Course;
 import com.example.demodoan.service.impl.CourseServiceImpl;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -17,7 +19,7 @@ public class CourseController {
     private CourseServiceImpl courseServiceImpl;
 
     @PostMapping
-    Course createCourse(@RequestBody CourseDTO courseDTO){
+    Course createCourse(@Valid @RequestBody CourseDTO courseDTO) {
         return courseServiceImpl.createCourse(courseDTO);
     }
 
@@ -27,7 +29,7 @@ public class CourseController {
     }
 
     @PutMapping("/{id}")
-    Course updateCourse (@PathVariable Long id, @RequestBody CourseDTO courseDTO){
+    Course updateCourse (@PathVariable Long id,@Valid @RequestBody CourseDTO courseDTO){
         return courseServiceImpl.updateCourse(id, courseDTO);
     }
 
