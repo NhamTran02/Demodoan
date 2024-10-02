@@ -1,20 +1,18 @@
 package com.example.demodoan.service.impl;
 
-
 import com.example.demodoan.dto.CategoryDTO;
 import com.example.demodoan.model.Category;
 import com.example.demodoan.repository.CategoryRepository;
 import com.example.demodoan.service.CategoryService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-
+@RequiredArgsConstructor
 @Service
 public class CategoryServiceImpl implements CategoryService {
-    @Autowired
-    private CategoryRepository categoryRepository;
+    private final CategoryRepository categoryRepository;
 
     @Override
     public List<Category> getAllCategory() {
@@ -50,5 +48,4 @@ public class CategoryServiceImpl implements CategoryService {
         return categoryRepository.findByNameContainingIgnoreCase(name);
     }
 
-    //chiu b Nhâm
 }

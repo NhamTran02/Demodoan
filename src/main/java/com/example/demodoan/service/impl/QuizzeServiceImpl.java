@@ -1,28 +1,29 @@
 package com.example.demodoan.service.impl;
 
 import com.example.demodoan.dto.QuizzeDTO;
+import com.example.demodoan.exception.ErrorCode;
+import com.example.demodoan.exception.ResourceNotFoundException;
 import com.example.demodoan.model.Course;
 import com.example.demodoan.model.Quizze;
 import com.example.demodoan.repository.CourseRepository;
 import com.example.demodoan.repository.QuizzeRepository;
 import com.example.demodoan.service.QuizzeService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class QuizzeServiceImpl implements QuizzeService {
-    @Autowired
-    private QuizzeRepository quizzeRepository;
-    @Autowired
-    private CourseRepository courseRepository;
+    private final QuizzeRepository quizzeRepository;
+    private final CourseRepository courseRepository;
 
     @Override
     public Quizze createQuizze(QuizzeDTO quizzeDTO) {
         Course course=courseRepository.findById(quizzeDTO.getCourse())
-                .orElseThrow(()-> new RuntimeException("Course not found"));
+                .orElseThrow(()-> new ResourceNotFoundException(ErrorCode.COURSE_NOT_FOUND));
         Quizze quizze = Quizze.builder()
                 .title(quizzeDTO.getTitle())
                 .questions(quizzeDTO.getQuestions())
@@ -44,9 +45,9 @@ public class QuizzeServiceImpl implements QuizzeService {
     @Override
     public Quizze updateQuizze(QuizzeDTO quizzeDTO,Long id) {
         Quizze quizze=quizzeRepository.findById(id)
-                .orElseThrow(()-> new RuntimeException("Cannot find quizze with id: "+id));
+                .orElseThrow(()-> new ResourceNotFoundException(ErrorCode.QUIZZE_NOT_FOUND));
         Course course=courseRepository.findById(quizzeDTO.getCourse())
-                .orElseThrow(()-> new RuntimeException("Cannot find course with id: "+quizzeDTO.getCourse()));
+                .orElseThrow(()-> new ResourceNotFoundException(ErrorCode.COURSE_NOT_FOUND));
         quizze.setTitle(quizzeDTO.getTitle());
         quizze.setQuestions(quizzeDTO.getQuestions());
         quizze.setCourse(course);
@@ -57,7 +58,7 @@ public class QuizzeServiceImpl implements QuizzeService {
     public void deleteQuizze(Long id) {
         Optional<Quizze> quizze=quizzeRepository.findById(id);
         if (!quizze.isPresent()) {
-            throw new RuntimeException("Quizze not found");
+            throw new ResourceNotFoundException(ErrorCode.QUIZZE_NOT_FOUND);
         }
         quizzeRepository.deleteById(id);
     }

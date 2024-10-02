@@ -8,19 +8,17 @@ import com.example.demodoan.model.Course;
 import com.example.demodoan.repository.CategoryRepository;
 import com.example.demodoan.repository.CourseRepository;
 import com.example.demodoan.service.CourseService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class CourseServiceImpl implements CourseService {
-    @Autowired
-    private CourseRepository courseRepository;
-
-    @Autowired
-    private CategoryRepository categoryRepository;
+    private final CourseRepository courseRepository;
+    private final CategoryRepository categoryRepository;
 
     @Override
     public List<Course> getAllCourse() {
@@ -36,7 +34,7 @@ public class CourseServiceImpl implements CourseService {
         course.setImage(courseDTO.getImage());
 
         Category category = categoryRepository.findById(courseDTO.getCategory())
-                .orElseThrow(()-> new ResourceNotFoundException(ErrorCode.NOT_FOUND));
+                .orElseThrow(()-> new ResourceNotFoundException(ErrorCode.CATEGORY_NOT_FOUND));
         course.setCategory(category);
 
         return courseRepository.save(course);
@@ -53,7 +51,7 @@ public class CourseServiceImpl implements CourseService {
         course.setImage(courseDTO.getImage());
 
         Category category = categoryRepository.findById(courseDTO.getCategory())
-                .orElseThrow(()-> new RuntimeException("Không tìm thấy loại khóa học!"));
+                .orElseThrow(()-> new ResourceNotFoundException(ErrorCode.COURSE_NOT_FOUND));
         course.setCategory(category);
 
         return courseRepository.save(course);

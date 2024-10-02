@@ -1,8 +1,6 @@
 package com.example.demodoan.service;
 
-import com.example.demodoan.dto.CategoryDTO;
 import com.example.demodoan.dto.ChapterDTO;
-import com.example.demodoan.model.Category;
 import com.example.demodoan.model.Chapter;
 
 import java.util.List;

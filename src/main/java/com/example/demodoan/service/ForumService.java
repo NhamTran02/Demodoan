@@ -1,8 +1,6 @@
 package com.example.demodoan.service;
 
-import com.example.demodoan.dto.CourseDTO;
 import com.example.demodoan.dto.ForumDTO;
-import com.example.demodoan.model.Course;
 import com.example.demodoan.model.Forum;
 
 import java.util.List;

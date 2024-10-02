@@ -2,10 +2,6 @@ package com.example.demodoan.dto;
 
 import com.example.demodoan.enums.PaymentMethod;
 import com.example.demodoan.enums.PaymentStatus;
-import com.example.demodoan.model.Course;
-import com.example.demodoan.model.User;
-import com.fasterxml.jackson.annotation.JsonEnumDefaultValue;
-import jakarta.persistence.*;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;

@@ -1,6 +1,5 @@
 package com.example.demodoan.repository;
 
-import com.example.demodoan.dto.CategoryDTO;
 import com.example.demodoan.model.Category;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

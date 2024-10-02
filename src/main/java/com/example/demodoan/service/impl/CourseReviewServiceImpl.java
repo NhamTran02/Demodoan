@@ -1,28 +1,26 @@
 package com.example.demodoan.service.impl;
 
 import com.example.demodoan.dto.CourseReviewDTO;
+import com.example.demodoan.exception.ErrorCode;
+import com.example.demodoan.exception.ResourceNotFoundException;
 import com.example.demodoan.model.Course;
 import com.example.demodoan.model.User;
 import com.example.demodoan.repository.CourseRepository;
 import com.example.demodoan.repository.CourseReviewRepository;
 import com.example.demodoan.repository.UserRepository;
 import com.example.demodoan.service.CourseReview;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class CourseReviewServiceImpl implements CourseReview {
-    @Autowired
-    private CourseReviewRepository courseReviewRepository;
-
-    @Autowired
-    private UserRepository userRepository;
-
-    @Autowired
-    private CourseRepository courseRepository;
+    private final CourseReviewRepository courseReviewRepository;
+    private final UserRepository userRepository;
+    private final CourseRepository courseRepository;
 
     @Override
     public List<com.example.demodoan.model.CourseReview> getAllCourseReview() {
@@ -37,11 +35,11 @@ public class CourseReviewServiceImpl implements CourseReview {
         courseReview.setComment(courseReviewDTO.getComment());
 
         User user = userRepository.findById(courseReviewDTO.getUser())
-                .orElseThrow(()-> new RuntimeException("Phải đăng nhập vào tài khoản mới có thể comment"));
+                .orElseThrow(()-> new ResourceNotFoundException(ErrorCode.YOU_MUST_LOGIN));
         courseReview.setUser(user);
 
         Course course = courseRepository.findById(courseReviewDTO.getCourse())
-                .orElseThrow(()-> new RuntimeException("Không tìm thấy khóa học !"));
+                .orElseThrow(()-> new ResourceNotFoundException(ErrorCode.COURSE_NOT_FOUND));
         courseReview.setCourse(course);
 
         return courseReviewRepository.save(courseReview);
@@ -57,11 +55,11 @@ public class CourseReviewServiceImpl implements CourseReview {
         courseReview.setComment(courseReviewDTO.getComment());
 
         User user = userRepository.findById(courseReviewDTO.getUser())
-                .orElseThrow(()-> new RuntimeException("Phải đăng nhập vào tài khoản mới có thể comment"));
+                .orElseThrow(()-> new ResourceNotFoundException(ErrorCode.YOU_MUST_LOGIN));
         courseReview.setUser(user);
 
         Course course = courseRepository.findById(courseReviewDTO.getCourse())
-                .orElseThrow(()-> new RuntimeException("Không tìm thấy khóa học !"));
+                .orElseThrow(()-> new ResourceNotFoundException(ErrorCode.COURSE_NOT_FOUND));
         courseReview.setCourse(course);
 
         return courseReviewRepository.save(courseReview);

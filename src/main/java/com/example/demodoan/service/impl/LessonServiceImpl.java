@@ -1,24 +1,24 @@
 package com.example.demodoan.service.impl;
 
 import com.example.demodoan.dto.LessonDTO;
+import com.example.demodoan.exception.ErrorCode;
+import com.example.demodoan.exception.ResourceNotFoundException;
 import com.example.demodoan.model.Chapter;
 import com.example.demodoan.model.Lesson;
 import com.example.demodoan.repository.ChapterRepository;
 import com.example.demodoan.repository.LessonRepository;
 import com.example.demodoan.service.LessonService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class LessonServiceImpl implements LessonService {
-    @Autowired
-    private LessonRepository lessonRepository;
-
-    @Autowired
-    private ChapterRepository chapterRepository;
+    private final LessonRepository lessonRepository;
+    private final ChapterRepository chapterRepository;
 
     @Override
     public List<Lesson> getAllLesson() {
@@ -33,7 +33,7 @@ public class LessonServiceImpl implements LessonService {
         lesson.setVideoUrl(lessonDTO.getVideoUrl());
 
         Chapter chapter = chapterRepository.findById(lessonDTO.getChapter())
-                .orElseThrow(() -> new RuntimeException("Không tìm thấy chương"));
+                .orElseThrow(() -> new ResourceNotFoundException(ErrorCode.CHAPTER_NOT_FOUND));
         lesson.setChapter(chapter);
 
         return lessonRepository.save(lesson);
@@ -48,7 +48,7 @@ public class LessonServiceImpl implements LessonService {
         lesson.setVideoUrl(lessonDTO.getVideoUrl());
 
         Chapter chapter = chapterRepository.findById(lessonDTO.getChapter())
-                .orElseThrow(() -> new RuntimeException("Không tìm thấy chương"));
+                .orElseThrow(() -> new ResourceNotFoundException(ErrorCode.CHAPTER_NOT_FOUND));
         lesson.setChapter(chapter);
 
         return lessonRepository.save(lesson);

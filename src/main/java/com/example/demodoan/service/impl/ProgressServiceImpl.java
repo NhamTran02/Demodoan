@@ -1,6 +1,8 @@
 package com.example.demodoan.service.impl;
 
 import com.example.demodoan.dto.ProgressDTO;
+import com.example.demodoan.exception.ErrorCode;
+import com.example.demodoan.exception.ResourceNotFoundException;
 import com.example.demodoan.model.Course;
 import com.example.demodoan.model.Lesson;
 import com.example.demodoan.model.Progress;
@@ -10,25 +12,19 @@ import com.example.demodoan.repository.LessonRepository;
 import com.example.demodoan.repository.ProgressRepository;
 import com.example.demodoan.repository.UserRepository;
 import com.example.demodoan.service.ProgressService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class ProgressServiceImpl implements ProgressService {
-    @Autowired
-    private ProgressRepository progressRepository;
-
-    @Autowired
-    private UserRepository userRepository;
-
-    @Autowired
-    private CourseRepository courseRepository;
-
-    @Autowired
-    private LessonRepository lessonRepository;
+    private final ProgressRepository progressRepository;
+    private final UserRepository userRepository;
+    private final CourseRepository courseRepository;
+    private final LessonRepository lessonRepository;
 
     @Override
     public List<Progress> getAllProgress() {
@@ -42,15 +38,15 @@ public class ProgressServiceImpl implements ProgressService {
         progress.setStatus(progressDTO.getStatus());
 
         User user = userRepository.findById(progressDTO.getUser())
-                .orElseThrow(()->new RuntimeException("Bạn chưa đăng nhập"));
+                .orElseThrow(()->new ResourceNotFoundException(ErrorCode.YOU_MUST_LOGIN));
         progress.setUser(user);
 
         Course course = courseRepository.findById(progressDTO.getCourse())
-                .orElseThrow(()-> new RuntimeException("Không có khóa học này"));
+                .orElseThrow(()-> new ResourceNotFoundException(ErrorCode.COURSE_NOT_FOUND));
         progress.setCourse(course);
 
         Lesson lesson = lessonRepository.findById(progressDTO.getLesson())
-                .orElseThrow(()-> new RuntimeException("Không có tiết học này"));
+                .orElseThrow(()-> new ResourceNotFoundException(ErrorCode.LESSON_NOT_FOUND));
         progress.setLesson(lesson);
         return progressRepository.save(progress);
     }
@@ -63,15 +59,15 @@ public class ProgressServiceImpl implements ProgressService {
         progress.setStatus(progressDTO.getStatus());
 
         User user = userRepository.findById(progressDTO.getUser())
-                .orElseThrow(()->new RuntimeException("Bạn chưa đăng nhập"));
+                .orElseThrow(()->new ResourceNotFoundException(ErrorCode.YOU_MUST_LOGIN));
         progress.setUser(user);
 
         Course course = courseRepository.findById(progressDTO.getCourse())
-                .orElseThrow(()-> new RuntimeException("Không có khóa học này"));
+                .orElseThrow(()-> new ResourceNotFoundException(ErrorCode.COURSE_NOT_FOUND));
         progress.setCourse(course);
 
         Lesson lesson = lessonRepository.findById(progressDTO.getLesson())
-                .orElseThrow(()-> new RuntimeException("Không có tiết học này"));
+                .orElseThrow(()-> new ResourceNotFoundException(ErrorCode.LESSON_NOT_FOUND));
         progress.setLesson(lesson);
         return progressRepository.save(progress);
     }

@@ -1,24 +1,24 @@
 package com.example.demodoan.service.impl;
 
 import com.example.demodoan.dto.ChapterDTO;
+import com.example.demodoan.exception.ErrorCode;
+import com.example.demodoan.exception.ResourceNotFoundException;
 import com.example.demodoan.model.Chapter;
 import com.example.demodoan.model.Course;
 import com.example.demodoan.repository.ChapterRepository;
 import com.example.demodoan.repository.CourseRepository;
 import com.example.demodoan.service.ChapterService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class ChapterServiceImpl implements ChapterService {
-    @Autowired
-    private ChapterRepository chapterRepository;
-
-    @Autowired
-    private CourseRepository courseRepository;
+    private final ChapterRepository chapterRepository;
+    private final CourseRepository courseRepository;
 
     @Override
     public List<Chapter> getAllChapters() {
@@ -33,7 +33,7 @@ public class ChapterServiceImpl implements ChapterService {
         chapter.setQuantity(chapter.getQuantity());
 
         Course course = courseRepository.findById(chapterDTO.getCourse())
-                .orElseThrow(() -> new RuntimeException("Không tìm thấy khóa học này"));
+                .orElseThrow(() -> new ResourceNotFoundException(ErrorCode.COURSE_NOT_FOUND));
         chapter.setCourse(course);
         return chapterRepository.save(chapter);
     }
@@ -47,7 +47,7 @@ public class ChapterServiceImpl implements ChapterService {
         chapter.setQuantity(chapterDTO.getQuantity());
 
         Course course = courseRepository.findById(chapterDTO.getCourse())
-                .orElseThrow(() -> new RuntimeException("Không tìm thấy khóa học này"));
+                .orElseThrow(() -> new ResourceNotFoundException(ErrorCode.COURSE_NOT_FOUND));
         chapter.setCourse(course);
         return chapterRepository.save(chapter);
     }

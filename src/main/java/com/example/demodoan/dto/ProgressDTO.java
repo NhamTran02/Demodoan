@@ -1,10 +1,6 @@
 package com.example.demodoan.dto;
 
 import com.example.demodoan.enums.ProgressStatus;
-import com.example.demodoan.model.Course;
-import com.example.demodoan.model.Lesson;
-import com.example.demodoan.model.User;
-import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;

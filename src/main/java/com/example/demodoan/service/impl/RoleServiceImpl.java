@@ -1,17 +1,19 @@
 package com.example.demodoan.service.impl;
 
+import com.example.demodoan.exception.ErrorCode;
+import com.example.demodoan.exception.ResourceNotFoundException;
 import com.example.demodoan.model.Role;
 import com.example.demodoan.repository.RoleRepository;
 import com.example.demodoan.service.RoleService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.management.relation.RoleNotFoundException;
 import java.util.List;
 @Service
+@RequiredArgsConstructor
 public class RoleServiceImpl implements RoleService {
-    @Autowired
-    private RoleRepository roleRepository;
+    private final RoleRepository roleRepository;
 
     @Override
     public List<Role> getAllRole() {
@@ -23,7 +25,7 @@ public class RoleServiceImpl implements RoleService {
     public Role getRoleById(Long id) throws RoleNotFoundException {
         Role role=roleRepository.findById(id).get();
         if(role==null){
-            throw new RoleNotFoundException("Cannot find role with id: "+id);
+            throw new ResourceNotFoundException(ErrorCode.ROLE_NOT_FOUND);
         }
         return role;
     }

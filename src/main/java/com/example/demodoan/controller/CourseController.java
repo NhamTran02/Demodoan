@@ -1,7 +1,6 @@
 package com.example.demodoan.controller;
 
 import com.example.demodoan.dto.CourseDTO;
-import com.example.demodoan.exception.ResourceNotFoundException;
 import com.example.demodoan.model.Course;
 import com.example.demodoan.service.impl.CourseServiceImpl;
 import jakarta.validation.Valid;

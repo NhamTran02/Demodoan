@@ -1,24 +1,24 @@
 package com.example.demodoan.service.impl;
 
 import com.example.demodoan.dto.ForumDTO;
+import com.example.demodoan.exception.ErrorCode;
+import com.example.demodoan.exception.ResourceNotFoundException;
 import com.example.demodoan.model.Forum;
 import com.example.demodoan.model.User;
 import com.example.demodoan.repository.ForumRepository;
 import com.example.demodoan.repository.UserRepository;
 import com.example.demodoan.service.ForumService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class ForumServiceImpl implements ForumService {
-    @Autowired
-    private ForumRepository forumRepository;
-
-    @Autowired
-    private UserRepository userRepository;
+    private final ForumRepository forumRepository;
+    private final UserRepository userRepository;
 
     @Override
     public List<Forum> getAllForum() {
@@ -33,7 +33,7 @@ public class ForumServiceImpl implements ForumService {
         forum.setContent(forumDTO.getContent());
 
         User user = userRepository.findById(forumDTO.getUser())
-                .orElseThrow(() -> new RuntimeException("Phải đăng nhập tài khoản khoản"));
+                .orElseThrow(() -> new ResourceNotFoundException(ErrorCode.YOU_MUST_LOGIN));
         forum.setUser(user);
 
         return forumRepository.save(forum);
@@ -49,7 +49,7 @@ public class ForumServiceImpl implements ForumService {
         forum.setContent(forumDTO.getContent());
 
         User user = userRepository.findById(forumDTO.getUser())
-                .orElseThrow(() -> new RuntimeException("Phải đăng nhập tài khoản khoản"));
+                .orElseThrow(() -> new ResourceNotFoundException(ErrorCode.YOU_MUST_LOGIN));
         forum.setUser(user);
 
         return forumRepository.save(forum);

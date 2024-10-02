@@ -1,6 +1,8 @@
 package com.example.demodoan.service.impl;
 
 import com.example.demodoan.dto.EnrollmentDTO;
+import com.example.demodoan.exception.ErrorCode;
+import com.example.demodoan.exception.ResourceNotFoundException;
 import com.example.demodoan.model.Course;
 import com.example.demodoan.model.Enrollment;
 import com.example.demodoan.model.User;
@@ -8,22 +10,18 @@ import com.example.demodoan.repository.CourseRepository;
 import com.example.demodoan.repository.EnrollmentRepository;
 import com.example.demodoan.repository.UserRepository;
 import com.example.demodoan.service.EnrollmentService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class EnrollmentServiceImpl implements EnrollmentService {
-    @Autowired
-    private EnrollmentRepository enrollmentRepository;
-
-    @Autowired
-    private UserRepository userRepository;
-
-    @Autowired
-    private CourseRepository courseRepository;
+    private final EnrollmentRepository enrollmentRepository;
+    private final UserRepository userRepository;
+    private final CourseRepository courseRepository;
 
     @Override
     public List<Enrollment> getAllEnrollment() {
@@ -35,11 +33,11 @@ public class EnrollmentServiceImpl implements EnrollmentService {
         Enrollment enrollment = new Enrollment();
 
         User user = userRepository.findById(enrollmentDTO.getUser())
-                .orElseThrow(()-> new RuntimeException("Bạn phải đăng nhập"));
+                .orElseThrow(()-> new ResourceNotFoundException(ErrorCode.YOU_MUST_LOGIN));
         enrollment.setUser(user);
 
         Course course = courseRepository.findById(enrollmentDTO.getCourse())
-                .orElseThrow(()-> new RuntimeException("Khóa học khôn tồn tại"));
+                .orElseThrow(()-> new ResourceNotFoundException(ErrorCode.COURSE_NOT_FOUND));
         enrollment.setCourse(course);
         return enrollmentRepository.save(enrollment);
     }
@@ -50,11 +48,11 @@ public class EnrollmentServiceImpl implements EnrollmentService {
         Enrollment enrollment = optionalEnrollment.get();
 
         User user = userRepository.findById(enrollmentDTO.getUser())
-                .orElseThrow(()-> new RuntimeException("Bạn phải đăng nhập"));
+                .orElseThrow(()-> new ResourceNotFoundException(ErrorCode.YOU_MUST_LOGIN));
         enrollment.setUser(user);
 
         Course course = courseRepository.findById(enrollmentDTO.getCourse())
-                .orElseThrow(()-> new RuntimeException("Khóa học khôn tồn tại"));
+                .orElseThrow(()-> new ResourceNotFoundException(ErrorCode.COURSE_NOT_FOUND));
         enrollment.setCourse(course);
         return enrollmentRepository.save(enrollment);
     }

@@ -4,9 +4,7 @@ import com.example.demodoan.dto.ChapterDTO;
 import com.example.demodoan.model.Chapter;
 import com.example.demodoan.service.impl.ChapterServiceImpl;
 import jakarta.validation.Valid;
-import org.hibernate.annotations.Parameter;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.query.Param;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 

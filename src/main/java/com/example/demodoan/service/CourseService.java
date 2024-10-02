@@ -1,9 +1,7 @@
 package com.example.demodoan.service;
 
-import com.example.demodoan.dto.ChapterDTO;
 import com.example.demodoan.dto.CourseDTO;
 import com.example.demodoan.exception.ResourceNotFoundException;
-import com.example.demodoan.model.Chapter;
 import com.example.demodoan.model.Course;
 
 import java.util.List;

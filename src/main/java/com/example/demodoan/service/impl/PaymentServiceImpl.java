@@ -1,6 +1,8 @@
 package com.example.demodoan.service.impl;
 
 import com.example.demodoan.dto.PaymentDTO;
+import com.example.demodoan.exception.ErrorCode;
+import com.example.demodoan.exception.ResourceNotFoundException;
 import com.example.demodoan.model.Course;
 import com.example.demodoan.model.Payment;
 import com.example.demodoan.model.User;
@@ -8,28 +10,26 @@ import com.example.demodoan.repository.CourseRepository;
 import com.example.demodoan.repository.PaymentRepository;
 import com.example.demodoan.repository.UserRepository;
 import com.example.demodoan.service.PaymentService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class PaymentServiceImpl implements PaymentService {
-    @Autowired
-    private PaymentRepository paymentRepository;
-    @Autowired
-    private UserRepository userRepository;
-    @Autowired
-    private CourseRepository courseRepository;
+    private final PaymentRepository paymentRepository;
+    private final UserRepository userRepository;
+    private final CourseRepository courseRepository;
 
     @Override
     public Payment createPayment(PaymentDTO paymentDTO) {
 
         User user = userRepository.findById(paymentDTO.getUser())
-                .orElseThrow(()->new RuntimeException("User not found"));
+                .orElseThrow(()->new ResourceNotFoundException(ErrorCode.YOU_MUST_LOGIN));
 
         Course course = courseRepository.findById(paymentDTO.getCourse())
-                .orElseThrow(() -> new RuntimeException("Course not found"));
+                .orElseThrow(() -> new ResourceNotFoundException(ErrorCode.YOU_MUST_LOGIN));
 
         Payment payment = Payment.builder()
                 .amount(paymentDTO.getAmount())
@@ -49,6 +49,6 @@ public class PaymentServiceImpl implements PaymentService {
     @Override
     public Payment findPaymentById(Long id) {
         return paymentRepository.findById(id)
-                .orElseThrow(()->new RuntimeException("Payment not found"));
+                .orElseThrow(()->new ResourceNotFoundException(ErrorCode.PAYMENT_NOT_FOUND));
     }
 }

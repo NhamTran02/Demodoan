@@ -1,8 +1,6 @@
 package com.example.demodoan.service;
 
-import com.example.demodoan.dto.NotificationDTO;
 import com.example.demodoan.dto.ProgressDTO;
-import com.example.demodoan.model.Notification;
 import com.example.demodoan.model.Progress;
 
 import java.util.List;
