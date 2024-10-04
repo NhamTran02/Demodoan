@@ -1,8 +1,8 @@
 package com.example.demodoan.controller;
 
-import com.example.demodoan.dto.NotificationDTO;
+import com.example.demodoan.dto.request.NotificationDTO;
 import com.example.demodoan.model.Notification;
-import com.example.demodoan.service.impl.NotificationServiceImpl;
+import com.example.demodoan.service.NotificationService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
@@ -15,31 +15,31 @@ import java.util.List;
 @RequestMapping("/notification")
 public class NotificationController {
     @Autowired
-    private NotificationServiceImpl notificationServiceImpl;
+    private NotificationService notificationService;
 
     @PostMapping
     Notification createNotification(@Valid  @RequestBody NotificationDTO notificationDTO){
-        return notificationServiceImpl.createNotification(notificationDTO);
+        return notificationService.createNotification(notificationDTO);
     }
 
     @GetMapping
     List<Notification> getAllNotification(){
-        return notificationServiceImpl.getAllNotification();
+        return notificationService.getAllNotification();
     }
 
     @PutMapping("/{id}")
     Notification updateNotification (@PathVariable Long id,@Valid @RequestBody NotificationDTO notificationDTO){
-        return notificationServiceImpl.updateNotification(id, notificationDTO);
+        return notificationService.updateNotification(id, notificationDTO);
     }
 
     @DeleteMapping("/{id}")
     String deleteNotification(@PathVariable Long id){
-        notificationServiceImpl.deleteNotification(id);
+        notificationService.deleteNotification(id);
         return "Xóa thành công";
     }
 
     @GetMapping("/{message}")
     List<Notification> findMessageNotification (@PathVariable String message){
-        return notificationServiceImpl.findMessageNotification(message);
+        return notificationService.findMessageNotification(message);
     }
 }

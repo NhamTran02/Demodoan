@@ -1,4 +1,4 @@
-package com.example.demodoan.dto;
+package com.example.demodoan.dto.request;
 
 import com.example.demodoan.enums.ProgressStatus;
 import jakarta.validation.constraints.NotBlank;

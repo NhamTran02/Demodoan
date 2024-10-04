@@ -1,6 +1,6 @@
 package com.example.demodoan.service.impl;
 
-import com.example.demodoan.dto.CourseReviewDTO;
+import com.example.demodoan.dto.request.CourseReviewDTO;
 import com.example.demodoan.exception.ErrorCode;
 import com.example.demodoan.exception.ResourceNotFoundException;
 import com.example.demodoan.model.Course;
@@ -8,7 +8,7 @@ import com.example.demodoan.model.User;
 import com.example.demodoan.repository.CourseRepository;
 import com.example.demodoan.repository.CourseReviewRepository;
 import com.example.demodoan.repository.UserRepository;
-import com.example.demodoan.service.CourseReview;
+import com.example.demodoan.service.CourseReviewService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -17,7 +17,7 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
-public class CourseReviewServiceImpl implements CourseReview {
+public class CourseReviewServiceImpl implements CourseReviewService {
     private final CourseReviewRepository courseReviewRepository;
     private final UserRepository userRepository;
     private final CourseRepository courseRepository;

@@ -1,6 +1,6 @@
 package com.example.demodoan.controller;
 
-import com.example.demodoan.dto.QuizzeDTO;
+import com.example.demodoan.dto.request.QuizzeDTO;
 import com.example.demodoan.model.Quizze;
 import com.example.demodoan.service.QuizzeService;
 import jakarta.validation.Valid;

@@ -1,6 +1,6 @@
 package com.example.demodoan.service.impl;
 
-import com.example.demodoan.dto.UserDTO;
+import com.example.demodoan.dto.request.UserDTO;
 import com.example.demodoan.exception.ErrorCode;
 import com.example.demodoan.exception.ResourceNotFoundException;
 import com.example.demodoan.model.Role;
@@ -11,6 +11,7 @@ import com.example.demodoan.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.Optional;
 
 @Service
@@ -60,15 +61,15 @@ public class UserServiceImpl implements UserService {
 
         // Sử dụng Builder để tạo đối tượng User mới với các trường được cập nhật
         User updatedUser = User.builder()
-                .id(existingUser.getId())
                 .username(userDTO.getUsername())
                 .email(existingUser.getEmail())
                 .password(userDTO.getPassword())
                 .phoneNumber(userDTO.getPhoneNumber())
                 .role(role)
                 .build();
+        updatedUser.setId(existingUser.getId());
         updatedUser.setCreateAt(existingUser.getCreateAt());
-        updatedUser.setUpdateAt(existingUser.getUpdateAt());
+        updatedUser.setUpdateAt(LocalDate.now());
 
         // Lưu lại thông tin User đã cập nhật
         return userRepository.save(updatedUser);

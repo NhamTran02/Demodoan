@@ -1,6 +1,6 @@
 package com.example.demodoan.service.impl;
 
-import com.example.demodoan.dto.NotificationDTO;
+import com.example.demodoan.dto.request.NotificationDTO;
 import com.example.demodoan.exception.ErrorCode;
 import com.example.demodoan.exception.ResourceNotFoundException;
 import com.example.demodoan.model.Notification;

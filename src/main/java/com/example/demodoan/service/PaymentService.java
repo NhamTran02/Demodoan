@@ -1,7 +1,7 @@
 package com.example.demodoan.service;
 
 
-import com.example.demodoan.dto.PaymentDTO;
+import com.example.demodoan.dto.request.PaymentDTO;
 import com.example.demodoan.model.Payment;
 
 import java.util.List;

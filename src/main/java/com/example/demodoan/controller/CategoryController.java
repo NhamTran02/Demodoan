@@ -1,8 +1,8 @@
 package com.example.demodoan.controller;
 
-import com.example.demodoan.dto.CategoryDTO;
+import com.example.demodoan.dto.request.CategoryDTO;
 import com.example.demodoan.model.Category;
-import com.example.demodoan.service.impl.CategoryServiceImpl;
+import com.example.demodoan.service.CategoryService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
@@ -15,31 +15,31 @@ import java.util.List;
 @RequestMapping("/category")
 public class CategoryController {
     @Autowired
-    private CategoryServiceImpl categoryServiceImpl;
+    private CategoryService categoryService;
 
     @PostMapping
     Category createCategory(@Valid @RequestBody CategoryDTO categoryDTO){
-        return categoryServiceImpl.createCategory(categoryDTO);
+        return categoryService.createCategory(categoryDTO);
     }
 
     @GetMapping
     List<Category> getAllCategory(){
-        return categoryServiceImpl.getAllCategory();
+        return categoryService.getAllCategory();
     }
 
     @PutMapping("/{id}")
     Category updateCategory (@PathVariable Long id,@Valid @RequestBody CategoryDTO categoryDTO){
-        return categoryServiceImpl.updateCategory(id, categoryDTO);
+        return categoryService.updateCategory(id, categoryDTO);
     }
 
     @DeleteMapping("/{id}")
     String deleteCategory(@PathVariable Long id){
-        categoryServiceImpl.deleteCategory(id);
+        categoryService.deleteCategory(id);
         return "Xóa thành công";
     }
 
     @GetMapping("/{name}")
     List<Category> findNameCategory (@PathVariable String name){
-        return categoryServiceImpl.findNameCategory(name);
+        return categoryService.findNameCategory(name);
     }
 }

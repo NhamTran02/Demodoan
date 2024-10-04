@@ -1,8 +1,8 @@
 package com.example.demodoan.controller;
 
-import com.example.demodoan.dto.CourseReviewDTO;
+import com.example.demodoan.dto.request.CourseReviewDTO;
 import com.example.demodoan.model.CourseReview;
-import com.example.demodoan.service.impl.CourseReviewServiceImpl;
+import com.example.demodoan.service.CourseReviewService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
@@ -15,26 +15,26 @@ import java.util.List;
 @RequestMapping("/courseReview")
 public class CourseReviewController {
     @Autowired
-    private CourseReviewServiceImpl courseReviewServiceImpl;
+    private CourseReviewService courseReviewService;
 
     @PostMapping
     CourseReview createCourseReview(@Valid @RequestBody CourseReviewDTO courseReviewDTO){
-        return courseReviewServiceImpl.createCourseReview(courseReviewDTO);
+        return courseReviewService.createCourseReview(courseReviewDTO);
     }
 
     @GetMapping
     List<CourseReview> getAllCourseReview(){
-        return courseReviewServiceImpl.getAllCourseReview();
+        return courseReviewService.getAllCourseReview();
     }
 
     @PutMapping("/{id}")
     CourseReview updateCourseReview (@PathVariable Long id,@Valid @RequestBody CourseReviewDTO courseReviewDTO){
-        return courseReviewServiceImpl.updateCourseReview(id, courseReviewDTO);
+        return courseReviewService.updateCourseReview(id, courseReviewDTO);
     }
 
     @DeleteMapping("/{id}")
     String deleteCourseReview(@PathVariable Long id){
-        courseReviewServiceImpl.deleteCourseReview(id);
+        courseReviewService.deleteCourseReview(id);
         return "Xóa thành công";
     }
 }

@@ -1,6 +1,6 @@
 package com.example.demodoan.service.impl;
 
-import com.example.demodoan.dto.CategoryDTO;
+import com.example.demodoan.dto.request.CategoryDTO;
 import com.example.demodoan.model.Category;
 import com.example.demodoan.repository.CategoryRepository;
 import com.example.demodoan.service.CategoryService;

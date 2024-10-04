@@ -1,6 +1,6 @@
 package com.example.demodoan.service.impl;
 
-import com.example.demodoan.dto.ProgressDTO;
+import com.example.demodoan.dto.request.ProgressDTO;
 import com.example.demodoan.exception.ErrorCode;
 import com.example.demodoan.exception.ResourceNotFoundException;
 import com.example.demodoan.model.Course;

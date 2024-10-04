@@ -1,6 +1,6 @@
 package com.example.demodoan.controller;
 
-import com.example.demodoan.dto.PaymentDTO;
+import com.example.demodoan.dto.request.PaymentDTO;
 import com.example.demodoan.model.Payment;
 import com.example.demodoan.service.PaymentService;
 import jakarta.validation.Valid;

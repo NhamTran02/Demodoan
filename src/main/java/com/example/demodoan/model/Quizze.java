@@ -11,9 +11,6 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Quizze extends Base{
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
 
     @Column(name = "title")
     private String title;

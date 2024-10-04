@@ -1,8 +1,8 @@
 package com.example.demodoan.controller;
 
-import com.example.demodoan.dto.LessonDTO;
+import com.example.demodoan.dto.request.LessonDTO;
 import com.example.demodoan.model.Lesson;
-import com.example.demodoan.service.impl.LessonServiceImpl;
+import com.example.demodoan.service.LessonService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
@@ -15,31 +15,31 @@ import java.util.List;
 @RequestMapping("/lesson")
 public class LessonController {
     @Autowired
-    private LessonServiceImpl lessonServiceImpl;
+    private LessonService lessonService;
 
     @PostMapping
     Lesson createLesson(@Valid  @RequestBody LessonDTO lessonDTO){
-        return lessonServiceImpl.createLesson(lessonDTO);
+        return lessonService.createLesson(lessonDTO);
     }
 
     @GetMapping
     List<Lesson> getAllLesson(){
-        return lessonServiceImpl.getAllLesson();
+        return lessonService.getAllLesson();
     }
 
     @PutMapping("/{id}")
     Lesson updateLesson (@PathVariable Long id,@Valid @RequestBody LessonDTO lessonDTO){
-        return lessonServiceImpl.updateLesson(id, lessonDTO);
+        return lessonService.updateLesson(id, lessonDTO);
     }
 
     @DeleteMapping("/{id}")
     String deleteLesson(@PathVariable Long id){
-        lessonServiceImpl.deleteLesson(id);
+        lessonService.deleteLesson(id);
         return "Xóa thành công";
     }
 
     @GetMapping("/{title}")
     List<Lesson> findTitleLesson (@PathVariable String title){
-        return lessonServiceImpl.findTitleLesson(title);
+        return lessonService.findTitleLesson(title);
     }
 }

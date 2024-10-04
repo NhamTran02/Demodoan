@@ -1,6 +1,6 @@
 package com.example.demodoan.service;
 
-import com.example.demodoan.dto.UserDTO;
+import com.example.demodoan.dto.request.UserDTO;
 import com.example.demodoan.model.User;
 
 public interface UserService {

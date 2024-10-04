@@ -1,8 +1,8 @@
 package com.example.demodoan.controller;
 
-import com.example.demodoan.dto.ProgressDTO;
+import com.example.demodoan.dto.request.ProgressDTO;
 import com.example.demodoan.model.Progress;
-import com.example.demodoan.service.impl.ProgressServiceImpl;
+import com.example.demodoan.service.ProgressService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
@@ -15,26 +15,26 @@ import java.util.List;
 @RequestMapping("/progress")
 public class ProgressController {
     @Autowired
-    private ProgressServiceImpl progressServiceImpl;
+    private ProgressService progressService;
 
     @PostMapping
     Progress createProgress(@Valid @RequestBody ProgressDTO progressDTO){
-        return progressServiceImpl.createProgress(progressDTO);
+        return progressService.createProgress(progressDTO);
     }
 
     @GetMapping
     List<Progress> getAllProgress(){
-        return progressServiceImpl.getAllProgress();
+        return progressService.getAllProgress();
     }
 
     @PutMapping("/{id}")
     Progress updateProgress (@PathVariable Long id,@Valid @RequestBody ProgressDTO progressDTO){
-        return progressServiceImpl.updateProgress(id, progressDTO);
+        return progressService.updateProgress(id, progressDTO);
     }
 
     @DeleteMapping("/{id}")
     String deleteProgress(@PathVariable Long id){
-        progressServiceImpl.deleteProgress(id);
+        progressService.deleteProgress(id);
         return "Xóa thành công";
     }
 }

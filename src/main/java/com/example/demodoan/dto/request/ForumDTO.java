@@ -1,4 +1,4 @@
-package com.example.demodoan.dto;
+package com.example.demodoan.dto.request;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -9,15 +9,15 @@ import lombok.*;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class QuizzeDTO {
+public class ForumDTO {
     private Long id;
 
     @NotBlank(message = "title kh đc trống")
     private String title;
 
-    @NotBlank(message = "questions kh đc trống")
-    private String questions;
+    @NotBlank(message = "content kh đc trống")
+    private String content;
 
-    @NotNull(message = "course ID is required")
-    private Long course;
+    @NotNull(message = "user ID is required")
+    private Long user;
 }

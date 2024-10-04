@@ -1,6 +1,6 @@
 package com.example.demodoan.service;
 
-import com.example.demodoan.dto.QuizzeDTO;
+import com.example.demodoan.dto.request.QuizzeDTO;
 import com.example.demodoan.model.Quizze;
 
 import java.util.List;

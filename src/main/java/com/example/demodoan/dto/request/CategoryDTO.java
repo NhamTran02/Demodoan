@@ -1,4 +1,4 @@
-package com.example.demodoan.dto;
+package com.example.demodoan.dto.request;
 
 import jakarta.validation.constraints.NotBlank;
 

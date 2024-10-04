@@ -1,6 +1,6 @@
 package com.example.demodoan.service;
 
-import com.example.demodoan.dto.NotificationDTO;
+import com.example.demodoan.dto.request.NotificationDTO;
 import com.example.demodoan.model.Notification;
 
 import java.util.List;
