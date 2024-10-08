@@ -9,13 +9,13 @@ import com.example.demodoan.repository.RoleRepository;
 import com.example.demodoan.repository.UserRepository;
 import com.example.demodoan.service.UserService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -24,6 +24,7 @@ import java.util.Optional;
 public class UserServiceImpl implements UserService{
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
+    private final PasswordEncoder passwordEncoder;
 
     @Override
     public UserDetailsService userDetailsService() {
@@ -32,7 +33,7 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public User createUser(UserDTO userDTO) throws Exception {
+    public User createUser(UserDTO userDTO){
         Optional<User> optionalUser=userRepository.findByEmail(userDTO.getEmail());
         if(optionalUser.isPresent()){
             throw new ResourceNotFoundException(ErrorCode.EMAIL_EXISTS);
@@ -48,13 +49,12 @@ public class UserServiceImpl implements UserService{
         User user=User.builder()
                 .username(userDTO.getUsername())
                 .email(userDTO.getEmail())
-                .password(userDTO.getPassword())
+                .password(passwordEncoder.encode(userDTO.getPassword()))
                 .phoneNumber(userDTO.getPhoneNumber())
                 .build();
         user.setRole(role);
         return userRepository.save(user);
     }
-
     @Override
     public List<User> getAllUsers() {
         return userRepository.findAll();

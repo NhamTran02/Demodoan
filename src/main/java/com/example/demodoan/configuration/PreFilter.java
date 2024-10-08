@@ -1,6 +1,5 @@
 package com.example.demodoan.configuration;
 
-import ch.qos.logback.core.util.StringUtil;
 import com.example.demodoan.enums.TokenType;
 import com.example.demodoan.service.JwtService;
 import com.example.demodoan.service.UserService;
@@ -11,6 +10,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -23,10 +24,20 @@ import java.io.IOException;
 
 @Component
 @Slf4j
-@RequiredArgsConstructor
 public class PreFilter extends OncePerRequestFilter {
-    private final UserService userService;
     private final JwtService jwtService;
+    private UserService userService;
+
+    @Autowired
+    public PreFilter(JwtService jwtService) {
+        this.jwtService = jwtService;
+    }
+
+    @Autowired
+    public void setUserService(UserService userService) {
+        this.userService = userService; // Setter injection
+    }
+
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         log.info("----------------PreFilter---------------");
