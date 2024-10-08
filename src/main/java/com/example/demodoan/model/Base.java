@@ -6,7 +6,11 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.data.annotation.CreatedDate;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 
 @Getter
@@ -14,15 +18,17 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @AllArgsConstructor
 @MappedSuperclass//Quan trọng: xác định lớp này là siêu lớp cho các entity khác
-public abstract class Base {
+public abstract class Base implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(name = "create_at")
+    @CreationTimestamp
     private LocalDate createAt;
 
     @Column(name = "update_at")
+    @UpdateTimestamp
     private LocalDate updateAt;
     //Tự cập nhật thời gian
     @PrePersist

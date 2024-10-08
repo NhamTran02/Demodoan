@@ -9,22 +9,37 @@ import com.example.demodoan.repository.RoleRepository;
 import com.example.demodoan.repository.UserRepository;
 import com.example.demodoan.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
-public class UserServiceImpl implements UserService {
+public class UserServiceImpl implements UserService{
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
+
+    @Override
+    public UserDetailsService userDetailsService() {
+        return  username -> userRepository.findByUsername(username)
+                .orElseThrow(() -> new ResourceNotFoundException(ErrorCode.USER_NOT_FOUND));
+    }
 
     @Override
     public User createUser(UserDTO userDTO) throws Exception {
         Optional<User> optionalUser=userRepository.findByEmail(userDTO.getEmail());
         if(optionalUser.isPresent()){
             throw new ResourceNotFoundException(ErrorCode.EMAIL_EXISTS);
+        }
+        Optional<User> optional=userRepository.findByUsername(userDTO.getUsername());
+        if(optional.isPresent()){
+            throw new ResourceNotFoundException(ErrorCode.USERNAME_EXISTS);
         }
         Role role= roleRepository.findById(userDTO.getRole()).orElseThrow(()-> new ResourceNotFoundException(ErrorCode.ROLE_NOT_FOUND));
         if (role.getName().toUpperCase().equals("ADMIN")){
@@ -41,12 +56,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public String login(String email, String password) {
-        Optional<User> optionalUser=userRepository.findByEmail(email);
-        if(optionalUser.isEmpty()){
-            throw new ResourceNotFoundException(ErrorCode.INVALID_LOGIN);
-        }
-        return "token";
+    public List<User> getAllUsers() {
+        return userRepository.findAll();
     }
 
     @Override
@@ -73,5 +84,14 @@ public class UserServiceImpl implements UserService {
 
         // Lưu lại thông tin User đã cập nhật
         return userRepository.save(updatedUser);
+    }
+
+    @Override
+    public void deleteUser(Long id) {
+        Optional<User> optionalUser=userRepository.findById(id);
+        if(!optionalUser.isEmpty()){
+            throw new ResourceNotFoundException(ErrorCode.USER_NOT_FOUND);
+        }
+        userRepository.deleteById(optionalUser.get().getId());
     }
 }
