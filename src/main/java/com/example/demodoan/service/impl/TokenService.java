@@ -11,7 +11,7 @@ import java.util.Optional;
 @Service
 public record TokenService(TokenRepository tokenRepository) {
     public long save(Token token) {
-        Optional<Token> optional =tokenRepository.findByUsername(token.getUsername());
+        Optional<Token> optional =tokenRepository.findByEmail(token.getEmail());
         if (optional.isEmpty()) {
             tokenRepository.save(token);
             return token.getId();
@@ -27,7 +27,7 @@ public record TokenService(TokenRepository tokenRepository) {
         tokenRepository.delete(token);
         return "Deleted!";
     }
-    public Token getByUsername(String username) {
-        return tokenRepository.findByUsername(username).orElseThrow(()-> new ResourceNotFoundException(ErrorCode.TOKEN_NOT_EXISTS));
+    public Token getByEmail(String email) {
+        return tokenRepository.findByEmail(email).orElseThrow(()-> new ResourceNotFoundException(ErrorCode.TOKEN_NOT_EXISTS));
     }
 }

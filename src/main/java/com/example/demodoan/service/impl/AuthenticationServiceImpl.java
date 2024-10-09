@@ -42,7 +42,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         String refreshToken=jwtService.generateRefreshToken(optionalUser.get());
         //save token to db
         tokenService.save(Token.builder()
-                        .username(loginDTO.getEmail())
+                        .email(loginDTO.getEmail())
                         .accessToken(accessToken)
                         .refressToken(refreshToken)
                 .build());
@@ -77,13 +77,13 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     @Override
     public String logout(HttpServletRequest request) {
-        String refreshToken=request.getHeader(AUTHORIZATION);
+        String refreshToken=request.getHeader("x-token");
         if (StringUtils.isBlank(refreshToken)) {
             throw new ResourceNotFoundException(ErrorCode.TOKEN_IS_NOT_BLANK);
         }
         //extract user from token
-        final String username=jwtService.extractUsername(refreshToken, TokenType.ACCESS_TOKEN);
-        Token currentToken=tokenService.getByUsername(username);
+        final String email=jwtService.extractUsername(refreshToken, TokenType.ACCESS_TOKEN);
+        Token currentToken=tokenService.getByEmail(email);
         tokenService.delete(currentToken);
         return "Deleted!";
     }
