@@ -144,13 +144,20 @@ CREATE TABLE tbl_notifications (
                                    create_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
                                    FOREIGN KEY (user_id) REFERENCES tbl_users(id)
 );
+CREATE TABLE tbl_tokens(
+                           id INT PRIMARY KEY AUTO_INCREMENT,
+                           username VARCHAR(255),
+                           create_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                           update_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+                           access_token VARCHAR(255),
+                           refresh_token VARCHAR(255)
+);
 select * from tbl_users;
+select * from tbl_tokens;
 select * from tbl_roles;
 select * from tbl_notifications;
 select * from tbl_forums;
 select * from tbl_payments;
-
-
 
 
 

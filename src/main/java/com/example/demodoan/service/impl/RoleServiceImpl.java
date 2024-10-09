@@ -6,7 +6,6 @@ import com.example.demodoan.model.Role;
 import com.example.demodoan.repository.RoleRepository;
 import com.example.demodoan.service.RoleService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
 import javax.management.relation.RoleNotFoundException;

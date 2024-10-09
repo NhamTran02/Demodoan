@@ -9,8 +9,6 @@ import com.example.demodoan.repository.RoleRepository;
 import com.example.demodoan.repository.UserRepository;
 import com.example.demodoan.service.UserService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -28,7 +26,7 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public UserDetailsService userDetailsService() {
-        return  username -> userRepository.findByUsername(username)
+        return  email -> userRepository.findByEmail(email)
                 .orElseThrow(() -> new ResourceNotFoundException(ErrorCode.USER_NOT_FOUND));
     }
 
@@ -74,7 +72,7 @@ public class UserServiceImpl implements UserService{
         User updatedUser = User.builder()
                 .username(userDTO.getUsername())
                 .email(existingUser.getEmail())
-                .password(userDTO.getPassword())
+                .password(passwordEncoder.encode(userDTO.getPassword()))
                 .phoneNumber(userDTO.getPhoneNumber())
                 .role(role)
                 .build();

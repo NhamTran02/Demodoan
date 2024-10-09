@@ -11,8 +11,8 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Token extends Base{
-    @Column(name = "username",unique = true,nullable = false)
-    private String username;
+    @Column(name = "email",unique = true,nullable = false)
+    private String email;
 
     @Column(name = "access_token")
     private String accessToken;

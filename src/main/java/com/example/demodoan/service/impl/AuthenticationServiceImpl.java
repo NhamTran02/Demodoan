@@ -31,18 +31,18 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     @Override
     public TokenResponse login(UserLoginDTO loginDTO) {
-        Optional<User> optionalUser=userRepository.findByUsername(loginDTO.getUsername());
+        Optional<User> optionalUser=userRepository.findByEmail(loginDTO.getEmail());
         if(optionalUser.isEmpty()){
             throw new ResourceNotFoundException(ErrorCode.INVALID_LOGIN);
         }
 
-        authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginDTO.getUsername(), loginDTO.getPassword()));
+        authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginDTO.getEmail(), loginDTO.getPassword()));
 
         String accessToken = jwtService.generateToken(optionalUser.get());
         String refreshToken=jwtService.generateRefreshToken(optionalUser.get());
         //save token to db
         tokenService.save(Token.builder()
-                        .username(loginDTO.getUsername())
+                        .username(loginDTO.getEmail())
                         .accessToken(accessToken)
                         .refressToken(refreshToken)
                 .build());
