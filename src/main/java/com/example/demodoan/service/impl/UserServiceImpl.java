@@ -14,6 +14,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -78,7 +79,7 @@ public class UserServiceImpl implements UserService{
                 .build();
         updatedUser.setId(existingUser.getId());
         updatedUser.setCreateAt(existingUser.getCreateAt());
-        updatedUser.setUpdateAt(LocalDate.now());
+        updatedUser.setUpdateAt(LocalDateTime.now());
 
         // Lưu lại thông tin User đã cập nhật
         return userRepository.save(updatedUser);

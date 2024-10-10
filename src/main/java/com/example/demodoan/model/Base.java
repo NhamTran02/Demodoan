@@ -12,6 +12,7 @@ import org.springframework.data.annotation.CreatedDate;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -25,20 +26,20 @@ public abstract class Base implements Serializable {
 
     @Column(name = "create_at")
     @CreationTimestamp
-    private LocalDate createAt;
+    private LocalDateTime createAt;
 
     @Column(name = "update_at")
     @UpdateTimestamp
-    private LocalDate updateAt;
+    private LocalDateTime updateAt;
     //Tự cập nhật thời gian
     @PrePersist
     protected void onCreate() {
-        createAt = LocalDate.now();
-        updateAt = LocalDate.now();
+        createAt = LocalDateTime.now();
+        updateAt = LocalDateTime.now();
     }
 
     @PreUpdate
     protected void onUpdate() {
-        updateAt = LocalDate.now();
+        updateAt = LocalDateTime.now();
     }
 }
